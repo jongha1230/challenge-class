@@ -234,7 +234,7 @@ export default App;
 <details style="margin-bottom: 20px;">
   <summary style="font-size: 26px"><strong>07. React Component의 생애주기</strong></summary>
   <div markdown="1">
-    
+
 ![React Component의 생애주기](Untitled.png)
 
 1. Run Lazy Initializers: 처음부터 값을 할당하지 않고 변수가 사용될 때까지 값을 할당하지 않는 것
