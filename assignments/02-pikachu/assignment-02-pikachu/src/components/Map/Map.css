@@ -1,0 +1,9 @@
+.map-container {
+  display: inline-grid;
+}
+
+.map-tile {
+  background-image: url("../../assets/grass.png");
+  background-size: cover;
+  position: relative;
+}
