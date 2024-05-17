@@ -4,28 +4,37 @@ import pikachuImage from "./assets/pikachu.png";
 import Map from "./components/Map";
 
 function App() {
+  const MAP_WIDTH = 10;
+  const MAP_HEIGHT = 10;
+  const TILE_SIZE = 50;
+
   const [position, setPosition] = useState({
     x: 0,
     y: 0,
     direction: "right",
     prevDirection: "right",
   });
+  const [isJumping, setIsJumping] = useState(false);
+
+  const updatePosition = (newPosition) => {
+    setPosition((prevState) => ({
+      ...newPosition,
+      prevDirection: prevState.direction,
+    }));
+  };
 
   const handleKeyDown = (event) => {
     const newPosition = { ...position };
+    if (isJumping) return;
 
     switch (event.key) {
       case "ArrowLeft":
         newPosition.x = Math.max(newPosition.x - 1, 0);
         newPosition.direction = "left";
-
-        console.log(newPosition);
         break;
       case "ArrowRight":
         newPosition.x = Math.min(newPosition.x + 1, MAP_WIDTH - 1);
         newPosition.direction = "right";
-
-        console.log(newPosition);
         break;
       case "ArrowUp":
         newPosition.y = Math.max(newPosition.y - 1, 0);
@@ -36,30 +45,31 @@ function App() {
         console.log(newPosition);
         break;
       case " ":
-        setPosition(newPosition);
+        setIsJumping(true);
+        setPosition((prevPosition) => ({
+          ...prevPosition,
+          y: Math.max(prevPosition.y - 1, 0),
+          prevDirection: prevPosition.direction,
+        }));
         setTimeout(() => {
-          setPosition({ ...newPosition, y: newPosition.y - 1 });
-          setTimeout(() => {
-            setPosition(newPosition);
-          }, 300);
+          setPosition((prevPosition) => ({
+            ...prevPosition,
+            y: Math.min(prevPosition.y + 1, MAP_HEIGHT - 1),
+          }));
+          setIsJumping(false);
         }, 300);
-        break;
+        return;
     }
 
-    setPosition((prevState) => ({
-      ...newPosition,
-      prevDirection: prevState.direction,
-    }));
+    updatePosition(newPosition);
   };
 
   const renderPikachu = (index) => {
     const x = index % MAP_WIDTH;
     const y = Math.floor(index / MAP_WIDTH);
     if (x === position.x && y == position.y) {
-      let flipClass = "";
-      if (position.direction !== position.prevDirection) {
-        flipClass = " flip";
-      }
+      const flipClass =
+        position.direction !== position.prevDirection ? " flip" : "";
       return (
         <img
           src={pikachuImage}
@@ -76,10 +86,6 @@ function App() {
       );
     }
   };
-
-  const MAP_WIDTH = 10;
-  const MAP_HEIGHT = 10;
-  const TILE_SIZE = 50;
 
   return (
     <>
