@@ -47,10 +47,9 @@ const initialState = {
         {
           id: initialMemoId,
           content: "",
-          date: initialMemoId,
         },
       ],
-  selectedMemoId: localData.selectedMemoId
+  selectedMemoId: localData.memos.length
     ? localData.memos[0].id
     : initialMemoId,
 };
@@ -82,7 +81,10 @@ const memoReducer = (prevState = initialState, action) => {
       );
       localStorage.setItem(
         "memo",
-        JSON.stringify({ memos: memosAfterDeletion })
+        JSON.stringify({
+          memos: memosAfterDeletion,
+          selectedMemoId: memosAfterDeletion[0].id,
+        })
       );
 
       return {
