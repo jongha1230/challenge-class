@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   addMemo,
   deleteMemo,
@@ -41,14 +42,15 @@ function MemoSide() {
       </MemoSideHeader>
       <MemoList>
         {memos.map((memo) => (
-          <MemoItem
-            key={memo.id}
-            onClick={() => handleSelectMemo(memo.id)}
-            $isSelected={memo.id === selectedMemoId}
-          >
-            <h6>{memo.content || "새로운 메모"}</h6>
-            <time>{NowTime("time", memo.date)}</time>
-          </MemoItem>
+          <Link key={memo.id} to={`/memo/${memo.id}`}>
+            <MemoItem
+              onClick={() => handleSelectMemo(memo.id)}
+              $isSelected={memo.id === selectedMemoId}
+            >
+              <h6>{memo.content || "새로운 메모"}</h6>
+              <time>{NowTime("time", memo.date)}</time>
+            </MemoItem>
+          </Link>
         ))}
       </MemoList>
     </MemoAside>
