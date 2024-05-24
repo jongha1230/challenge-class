@@ -46,8 +46,8 @@ const MemoItem = styled.li`
   height: 56px;
   padding: 12px 24px;
   cursor: pointer;
-  background-color: ${($memo) =>
-    $memo.isSelected ? "rgb(255, 224, 127)" : "inherit"};
+  background-color: ${({ $isSelected }) =>
+    $isSelected ? "rgb(255, 224, 127)" : "inherit"};
 
   h6 {
     margin: 0px 0px 2px;

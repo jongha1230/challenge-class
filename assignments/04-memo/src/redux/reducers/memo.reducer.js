@@ -35,18 +35,40 @@ export const selectMemosAndSelectedMemoId = createSelector(
 );
 
 const initialMemoId = Date.now();
-const initialState = {
-  memos: [{ id: initialMemoId, content: "", date: initialMemoId }],
+const localData = JSON.parse(localStorage.getItem("memo")) || {
+  memos: [],
   selectedMemoId: null,
+};
+
+const initialState = {
+  memos: localData.memos.length
+    ? localData.memos
+    : [
+        {
+          id: initialMemoId,
+          content: "",
+          date: initialMemoId,
+        },
+      ],
+  selectedMemoId: localData.selectedMemoId
+    ? localData.memos[0].id
+    : initialMemoId,
 };
 
 const memoReducer = (prevState = initialState, action) => {
   switch (action.type) {
     case ADD_MEMO: {
       const newMemo = action.payload;
+      const updatedMemos = [newMemo, ...prevState.memos];
+
+      localStorage.setItem(
+        "memo",
+        JSON.stringify({ memos: updatedMemos, selectedMemoId: newMemo.id })
+      );
+
       return {
         ...prevState,
-        memos: [newMemo, ...prevState.memos],
+        memos: updatedMemos,
         selectedMemoId: newMemo.id,
       };
     }
@@ -58,22 +80,35 @@ const memoReducer = (prevState = initialState, action) => {
       const memosAfterDeletion = prevState.memos.filter(
         (memo) => memo.id !== action.payload
       );
+      localStorage.setItem(
+        "memo",
+        JSON.stringify({ memos: memosAfterDeletion })
+      );
+
       return {
         ...prevState,
         memos: memosAfterDeletion,
-        selectedMemoId: memosAfterDeletion.length
-          ? memosAfterDeletion[0].id
-          : null,
+        selectedMemoId: memosAfterDeletion[0].id,
       };
     }
     case EDIT_MEMO: {
+      const updatedMemos = prevState.memos.map((memo) =>
+        memo.id === action.payload.id
+          ? { ...memo, content: action.payload.content }
+          : memo
+      );
+
+      localStorage.setItem(
+        "memo",
+        JSON.stringify({
+          memos: updatedMemos,
+          selectedMemoId: prevState.selectedMemoId,
+        })
+      );
+
       return {
         ...prevState,
-        memos: prevState.memos.map((memo) =>
-          memo.id === action.payload.id
-            ? { ...memo, content: action.payload.content }
-            : memo
-        ),
+        memos: updatedMemos,
       };
     }
     case SELECT_MEMO: {

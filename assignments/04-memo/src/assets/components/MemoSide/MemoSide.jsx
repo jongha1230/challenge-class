@@ -44,6 +44,7 @@ function MemoSide() {
         {memos.map((memo) => (
           <Link key={memo.id} to={`/memo/${memo.id}`}>
             <MemoItem
+              key={memo.id}
               onClick={() => handleSelectMemo(memo.id)}
               $isSelected={memo.id === selectedMemoId}
             >
