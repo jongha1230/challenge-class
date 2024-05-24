@@ -1,14 +1,21 @@
 import { createBrowserRouter } from "react-router-dom";
+import Layout from "../components/Layout";
 import MainPage from "../pages/MainPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainPage />,
-  },
-  {
-    path: "/memo/:memoId",
-    element: <MainPage />,
+    element: <Layout />,
+    children: [
+      {
+        path: "/",
+        element: <MainPage />,
+      },
+      {
+        path: "/memo/:memoId",
+        element: <MainPage />,
+      },
+    ],
   },
 ]);
 
