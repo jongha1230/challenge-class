@@ -15,6 +15,7 @@ import {
 } from "./MemoSide.styled";
 
 function MemoSide() {
+  console.log("MemoSide 리랜더링");
   const dispatch = useDispatch();
   const { memos, selectedMemoId } = useSelector(selectMemosAndSelectedMemoId);
 
