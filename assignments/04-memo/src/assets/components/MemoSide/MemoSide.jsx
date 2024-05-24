@@ -49,7 +49,7 @@ function MemoSide() {
               $isSelected={memo.id === selectedMemoId}
             >
               <h6>{memo.content || "새로운 메모"}</h6>
-              <time>{NowTime("time", memo.date)}</time>
+              <time>{NowTime("time", memo.id)}</time>
             </MemoItem>
           </Link>
         ))}
