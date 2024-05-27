@@ -49,7 +49,7 @@ function MemoSide() {
               onClick={() => handleSelectMemo(memo.id)}
               $isSelected={memo.id === selectedMemoId}
             >
-              <h6>{memo.content || "새로운 메모"}</h6>
+              <h6>{getTitle(memo.content) || "새로운 메모"}</h6>
               <time>{NowTime("time", memo.id)}</time>
             </MemoItem>
           </Link>
@@ -60,3 +60,10 @@ function MemoSide() {
 }
 
 export default MemoSide;
+function getTitle(title) {
+  return title.trim().length > 0
+    ? title.trim().length < 14
+      ? title.trim().slice(0, 14)
+      : title.trim().slice(0, 14) + "..."
+    : "새로운 메모";
+}

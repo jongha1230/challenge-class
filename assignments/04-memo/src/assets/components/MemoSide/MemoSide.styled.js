@@ -33,6 +33,7 @@ const MemoAside = styled.aside`
 
 const MemoList = styled.ul`
   padding: 20px 12px;
+  list-style: none;
   display: grid;
   grid-template-columns: 1fr;
   align-content: flex-start;
@@ -41,18 +42,20 @@ const MemoList = styled.ul`
   overflow-x: hidden;
 `;
 const MemoItem = styled.li`
-  max-width: 230px;
-  box-sizing: border-box; /* Padding 포함 */
+  /* max-width: 230px; */
   height: 56px;
+  border-radius: 4px;
+  width: 100%;
   padding: 12px 24px;
   cursor: pointer;
   background-color: ${({ $isSelected }) =>
     $isSelected ? "rgb(255, 224, 127)" : "inherit"};
 
   h6 {
-    margin: 0px 0px 2px;
+    margin: 0;
     font-size: 13px;
     font-weight: 700;
+    margin-bottom: 2px;
     text-overflow: ellipsis;
     overflow-x: hidden;
     white-space: nowrap;

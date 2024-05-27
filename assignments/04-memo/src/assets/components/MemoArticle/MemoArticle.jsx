@@ -8,7 +8,6 @@ import { NowTime } from "../NowTime/NowTime";
 import { CurrentTime, StrMemoArticle } from "./MemoArticle.styled";
 
 function MemoArticle() {
-  console.log("리렌더링");
   const dispatch = useDispatch();
   const { memos, selectedMemoId } = useSelector(selectMemosAndSelectedMemoId);
   const memo = memos.find((memo) => memo.id === selectedMemoId) || {};
