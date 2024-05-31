@@ -27,7 +27,6 @@ export const ToastProvider = ({ children }) => {
       setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
     }, 500);
   }, []);
-
   const showToast = useCallback(
     ({ title, content, duration = 2000 }) => {
       const id = Date.now();
