@@ -1,13 +1,14 @@
 import axios from "axios";
-import Auth_API from "./auth.ap";
-import Brands_API from "./brands.api";
-import Cart_API from "./cart.api";
-import Products_API from "./products.api";
+import AuthAPI from "./auth.api";
+import BrandsAPI from "./brands.api";
+import CartAPI from "./cart.api";
+import ProductsAPI from "./products.api";
 
 const BASE_URL = "https://api.ballang.yoojinyoung.com";
 
 class API {
   #axios;
+
   auth;
   brands;
   cart;
@@ -16,10 +17,10 @@ class API {
   constructor() {
     this.#axios = axios.create({ baseURL: BASE_URL, withCredentials: true });
 
-    this.auth = new Auth_API(this.#axios);
-    this.brands = new Brands_API();
-    this.cart = new Cart_API(this.#axios);
-    this.products = new Products_API(this.#axios);
+    this.auth = new AuthAPI(this.#axios);
+    this.brands = new BrandsAPI();
+    this.cart = new CartAPI(this.#axios);
+    this.products = new ProductsAPI(this.#axios);
   }
 
   setAccessToken(accessToken) {
@@ -28,5 +29,7 @@ class API {
       : "";
   }
 }
+
 const api = new API();
+
 export default api;

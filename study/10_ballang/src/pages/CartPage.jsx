@@ -1,41 +1,42 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "../api/api";
 
 function CartPage() {
+  const queryClient = useQueryClient();
+
   const { data: cart, isLoading } = useQuery({
     queryKey: ["cart"],
     queryFn: () => api.cart.getCart(),
   });
 
-  const {} = (productId) => async () => {
+  const { mutateAsync: removeItemFromCart } = useMutation({
+    mutationFn: (productId) => api.cart.removeItemFromCart(productId),
+  });
+
+  const handleClickRemoveItemFromCart = (productId) => async () => {
     await removeItemFromCart(productId);
 
     alert("상품이 장바구니에서 제거되었습니다.");
-  };
 
-  const handleClickRemoveCart = (productId) => {
-    () => {
-      // 장바구니 추가하는 로직
-      addItemToCart(productId, {
-        onSuccess: () => {
-          alert("상품에 제거되었습니다.");
-        },
-      });
-    };
+    queryClient.invalidateQueries({ queryKey: ["cart"] });
   };
 
   return (
     <div>
       <h1>장바구니</h1>
+
       {isLoading ? (
         "loading..."
       ) : (
         <ul style={{ textAlign: "left" }}>
-          {cart.map((cartItem) => (
+          {cart.items.map((cartItem) => (
             <li key={cartItem.id}>
               <h5>{cartItem.product.name}</h5>
-              <button onClick={handleClickRemoveCart(cartItem.id)}>
-                장바구니에 추가하기
+              <span>[ {cartItem.quantity}개 ]</span>
+              <button
+                onClick={handleClickRemoveItemFromCart(cartItem.product.id)}
+              >
+                장바구니에서 빼기
               </button>
             </li>
           ))}
@@ -44,3 +45,5 @@ function CartPage() {
     </div>
   );
 }
+
+export default CartPage;

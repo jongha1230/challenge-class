@@ -22,16 +22,21 @@ function SignUpPage() {
 
       alert("회원가입 완료");
       navigate("/");
-    } catch (error) {
+    } catch {
       alert("회원가입 실패");
     }
   };
+
   return (
     <div>
-      <input ref={emailInputRef} placeholder="이메일 입력" type="email" />
+      <input
+        ref={emailInputRef}
+        placeholder="이메일을 입력해 주세요"
+        type="email"
+      />
       <input
         ref={passwordInputRef}
-        placeholder="비밀번호 입력"
+        placeholder="비밀번호를 입력해 주세요"
         type="password"
       />
       <button onClick={handleClickSignUp}>회원가입하기</button>

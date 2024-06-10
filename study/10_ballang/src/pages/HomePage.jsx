@@ -1,9 +1,11 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import api from "../api/api";
 
 function HomePage() {
+  const navigate = useNavigate();
   const { data: products, isLoading } = useQuery({
-    queryKey: ["products", { list: true }],
+    queryKey: ["product", { list: true }],
     queryFn: () => api.products.getProducts(),
   });
 
@@ -11,24 +13,22 @@ function HomePage() {
     mutationFn: (productId) => api.cart.addItemToCart(productId),
   });
 
-  const handleClickAddItemToCart = (productId) => {
-    () => {
-      // 장바구니 추가하는 로직
-      addItemToCart(productId, {
-        onSuccess: () => {
-          const yes = confirm(
-            "상품에 장바구니에 잘 추가되었습니다. 장바구니에 가시겠습니까?"
-          );
-          if (yes) navigator("/cart");
-        },
-      });
-    };
+  const handleClickAddItemToCart = (productId) => () => {
+    // 장바구니 추가하는 로직
+    addItemToCart(productId, {
+      onSuccess: () => {
+        const yes = confirm(
+          "상품이 장바구니에 잘 추가되었습니다. 장바구니로 갈까요?"
+        );
+        if (yes) navigate("/cart");
+      },
+    });
   };
 
-  console.log("products", products);
   return (
     <div>
       <h1>HomePage</h1>
+
       {isLoading ? (
         "loading..."
       ) : (
