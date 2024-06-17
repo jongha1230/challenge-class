@@ -11,7 +11,6 @@ function MemoArticle() {
   const dispatch = useDispatch();
   const { memos, selectedMemoId } = useSelector(selectMemosAndSelectedMemoId);
   const memo = memos.find((memo) => memo.id === selectedMemoId) || {};
-
   const [content, setContent] = useState(memo.content);
 
   useEffect(() => {
