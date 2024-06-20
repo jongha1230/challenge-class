@@ -1,15 +1,14 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import PostForm from "./assets/components/Posts/PostForm";
-import Posts from "./assets/components/Posts/Posts";
+import Modal from "./assets/components/Modal";
+import ModalControls from "./assets/components/Modal/ModalControls";
 import queryClient from "./assets/react-query/queryClient";
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <PostForm />
-      <hr />
-      <Posts />
+      <ModalControls />
+      <Modal />
 
       <ReactQueryDevtools />
     </QueryClientProvider>

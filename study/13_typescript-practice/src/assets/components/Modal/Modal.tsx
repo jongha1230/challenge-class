@@ -2,10 +2,8 @@ import { useModal } from "./Modal.context";
 
 function Modal() {
   const modal = useModal();
-  const handleClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      modal.close();
-    }
+  const handleClick = () => {
+    modal.close();
   };
 
   return (

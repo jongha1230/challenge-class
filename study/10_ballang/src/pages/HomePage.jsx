@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
 
@@ -8,9 +8,13 @@ function HomePage() {
     queryKey: ["product", { list: true }],
     queryFn: () => api.products.getProducts(),
   });
+  const queryClient = useQueryClient();
 
   const { mutate: addItemToCart } = useMutation({
     mutationFn: (productId) => api.cart.addItemToCart(productId),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["product"]); // 캐시 데이터 초기화 실시간 업데이트 가능하게 해주는 메서드
+    },
   });
 
   const handleClickAddItemToCart = (productId) => () => {
