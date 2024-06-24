@@ -15,7 +15,7 @@ class API {
   products;
 
   constructor() {
-    this.#axios = axios.create({ baseURL: BASE_URL, withCredentials: true });
+    this.#axios = axios.create({ baseURL: BASE_URL, withCredentials: true,});
 
     this.auth = new AuthAPI(this.#axios);
     this.brands = new BrandsAPI();
