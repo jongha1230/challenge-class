@@ -8,7 +8,7 @@ function Modal() {
 
   return (
     <div
-      className="fixed top-0 bottom-0 left-0 right-0 bg-black/50 flex items-center justify-center"
+      className="fixed top-0 bottom-0 left-0 right-0 bg-black/50 flex items-center justify-center "
       onClick={handleClick}
     >
       <div className=" bg-white w-80 h-40 p-5">
