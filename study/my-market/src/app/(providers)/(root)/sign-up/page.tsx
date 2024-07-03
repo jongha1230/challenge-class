@@ -10,11 +10,14 @@ function SignupPage() {
   const handleSubmit: ComponentProps<"form">["onSubmit"] = async (e) => {
     e.preventDefault();
     const { data, error } = await supabase.auth.signUp({
-      email: "example12@email.com",
+      email: "example122@email.com",
       password: "example-password",
+      options: {
+        data: {
+          nickname: "닉네임",
+        },
+      },
     });
-
-    console.log("data", data);
   };
   return (
     <Page title="회원가입" width="sm">
